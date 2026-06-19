@@ -7,6 +7,26 @@ Built for the [Solana AI Kit](https://github.com/solanabr). A progressive,
 token-efficient skill that gives any coding/trading agent a one-call pre-trade
 safety gate.
 
+## Try it in 30 seconds
+
+No key, no install — hit the live oracle:
+
+```bash
+curl -s -X POST https://api.geckovision.tech/safety \
+  -H "Content-Type: application/json" \
+  -d '{"mint":"JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN"}'
+# -> {"gate":"ok", ... "information_mev":{"label":"clean", ...}}
+```
+
+…or run the zero-dependency reference client (prints the verdict, exits non-zero
+on a block so it composes in CI):
+
+```bash
+python scripts/safety.py JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN
+# ✅  gate = OK  (JUPyiwr…)
+#     - No manipulation signals: liquidity 0.40% of market cap.
+```
+
 ## The problem it solves
 
 Every contract checker on Solana (RugCheck, GoPlus, Solsniffer, Bubblemaps) tells
@@ -82,6 +102,9 @@ rules/
   pre-trade-safety.md      opt-in: gate token swaps with a check first
 examples/
   clean-jup.json           real OK verdict (verified) + blocked-brca.json (illustrative)
+scripts/
+  safety.py                zero-dependency reference client (stdlib urllib)
+  safety.ts                zero-dependency reference client (built-in fetch)
 install.sh                 copy-only installer (no binaries, no network)
 CLAUDE.md · LICENSE (MIT) · README.md
 ```
